@@ -1,0 +1,25 @@
+{
+  "name": "fffield",
+  "version": "0.0.1",
+  "description": "given a dom element, turn it into a X/Y cursor input",
+  "main": "index.js",
+  "dependencies": {
+    "onecolor": "~2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisdickinson/fffield.git"
+  },
+  "keywords": [
+    "dom",
+    "input",
+    "field",
+    "scrubber"
+  ],
+  "author": "Chris Dickinson <chris@neversaw.us>",
+  "license": "MIT"
+}
