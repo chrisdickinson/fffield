@@ -6,7 +6,9 @@
   "dependencies": {
     "onecolor": "~2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jsdom": "0.2.19"
+  },
   "scripts": {
     "test": "node test/index.js"
   },

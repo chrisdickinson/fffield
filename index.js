@@ -20,7 +20,7 @@ function Field(el, x, y) {
   this.initial_x = x || 0
   this.initial_y = y || 0
 
-  this.el.css('position', 'relative')
+  this.el.style.position = 'relative'
 
   this.x_extent = 
   this.y_extent = null
@@ -39,31 +39,42 @@ proto.init = function() {
   var self = this
     , move_listener 
     , listening = false
+    , padding_x = (~~self.el.style.paddingLeft || 0) + (~~self.el.style.paddingRight || 0)
+    , padding_y = (~~self.el.style.paddingTop || 0) + (~~self.el.style.paddingBottom || 0)
 
-  self.x_extent = self.el.outerWidth()
-  self.y_extent = self.el.outerHeight()
+  function px(x) {
+    return x ? +x.slice(0, -2) : x
+  }
+
+  self.x_extent = (self.el.clientWidth || px(self.el.style.width) || 0) + padding_x
+  self.y_extent = (self.el.clientHeight || px(self.el.style.height) || 0) + padding_y
 
   self.cursor = new self.cursor_class(self.el, 0, 0)
   self.set(self.initial_x, self.initial_y)
 
-  self.el.mousedown(function(ev) {
+  self.el.addEventListener('mousedown', function(ev) {
     listening = true 
     ev.preventDefault()
-  })
+  }, false)
 
-  self.el.mouseup(function(ev) {
+  self.el.addEventListener('mouseup', function(ev) {
     self.handle_click(ev)
-  })
+  }, false)
 
-  $('body').mouseup(function(ev) {
+  var parent = self.el
+  while(parent && parent.tagName.toUpperCase() !== 'BODY') {
+    parent = parent.parentNode
+  }
+
+  parent.addEventListener('mouseup', function(ev) {
     listening = false
-  })
+  }, false)
 
-  self.el.mousemove(function(ev) {
+  self.el.addEventListener('mousemove', function(ev) {
     if(listening) {
       self.handle_click(ev)
     }
-  })
+  }, false)
 }
 
 proto.set = function(x, y) {
